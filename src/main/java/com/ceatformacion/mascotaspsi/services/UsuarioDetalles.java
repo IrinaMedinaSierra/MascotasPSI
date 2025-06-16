@@ -28,6 +28,7 @@ public class UsuarioDetalles implements UserDetails {
 
     @Override
     public String getUsername() {
+        System.out.println(usuario.toString());
         return usuario.getUsername();
     }
 

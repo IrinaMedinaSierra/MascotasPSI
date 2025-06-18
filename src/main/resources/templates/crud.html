@@ -9,49 +9,66 @@
 </head>
 <body>
 
-    <header th:insert="fragments/headerSecurity.html :: headerSecurity"
-            class="bg-light container-fluid "> </header>
-    <div class="container ">
+<header th:insert="fragments/headerSecurity.html :: headerSecurity"
+        class="bg-light container-fluid "> </header>
+<div class="container ">
     <h1 class="text-center">Listado de Mascotas</h1>
-    <div class="row">
-        <div class="col-2" sec:authorize="hasRole('Admin')">
-            <a th:href="@{/formulario}" class="btn btn-primary mt-5 px-4" ><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg></a>
+
+    <div class="row g-3">
+        <div class="col-md-6" sec:authorize="hasRole('Admin')">
+            <a th:href="@{/formulario}" class="btn btn-primary  px-4" ><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg></a>
+        </div>
+        <div class="col-md-6">
+            <form th:action="@{/buscar}" method="get"  class="row row-cols-lg-auto g-3 align-items-center justify-content-end  ">
+                <div class="col-12">
+
+                    <input type="text" name="nombre" class="form-control" placeholder="Buscar por nombre">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-secondary">Buscar</button>
+                </div>
+            </form>
         </div>
     </div>
-    <table class="table table-striped mt-5">
-        <tr>
-            <th>Nombre</th>
-            <th>Especie</th>
-            <th>Raza</th>
-            <th>Edad</th>
-            <th>Peso</th>
-            <th>Dni_Propietario</th>
-            <th sec:authorize="hasRole('Admin')">Acciones</th>
-        </tr>
-        <tr th:each="mascota : ${mascotaParaCRUD}">
-            <td th:text="${mascota.nombre}"></td>
-            <td th:text="${mascota.especie}"></td>
-            <td th:text="${mascota.raza}"></td>
-            <td th:text="${mascota.edad}"></td>
-            <td th:text="${mascota.peso}"></td>
-            <td th:text="${mascota.dni_propietario}"></td>
-            <td>
-                <a th:href="@{'editar/' + ${mascota.getIdMascota()}}"
-                   class="btn btn-warning"
-                   sec:authorize="hasRole('Admin')">Editar</a>
 
-                <a th:href="@{'borrar/' + ${mascota.getIdMascota()}}"
-                   class="btn btn-danger"
-                   onclick="return confirm('¿Estas seguro de que quieres borrar a esta mascota?')"
-                   sec:authorize="hasRole('Admin')">Eliminar</a>
-            </td>
-        </tr>
-    </table>
-   <footer th:insert="fragments/footer.html::footer"></footer>
+<table class="table table-striped mt-5">
+    <tr>
+        <th>Nombre</th>
+        <th>Especie</th>
+        <th>Raza</th>
+        <th>Edad</th>
+        <th>Peso</th>
+        <th>Dni_Propietario</th>
+        <th sec:authorize="hasRole('Admin')">Acciones</th>
+    </tr>
+    <tr th:each="mascota : ${mascotaParaCRUD}">
+        <td th:text="${mascota.nombre}"></td>
+        <td th:text="${mascota.especie}"></td>
+        <td th:text="${mascota.raza}"></td>
+        <td th:text="${mascota.edad}"></td>
+        <td th:text="${mascota.peso}"></td>
+        <td th:text="${mascota.dni_propietario}"></td>
+        <td>
+            <a th:href="@{'editar/' + ${mascota.getIdMascota()}}"
+               class="btn btn-warning"
+               sec:authorize="hasRole('Admin')">Editar</a>
+
+            <a th:href="@{'borrar/' + ${mascota.getIdMascota()}}"
+               class="btn btn-danger"
+               onclick="return confirm('¿Estas seguro de que quieres borrar a esta mascota?')"
+               sec:authorize="hasRole('Admin')">Eliminar</a>
+            <a th:href="@{'/consulta/' + ${mascota.idMascota}}"
+               class="btn btn-info mt-2"
+               sec:authorize="hasRole('Admin')">Consulta</a>
+
+        </td>
+    </tr>
+</table>
+<footer th:insert="fragments/footer.html::footer"></footer>
 </div>
-    <script>
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    </script>
+<script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
 </body>
 </html>

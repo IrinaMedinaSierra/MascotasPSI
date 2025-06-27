@@ -26,8 +26,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/crud").hasRole("Admin")
 
                         // Formularios de gestión de usuarios: solo Admin
-                        .requestMatchers(HttpMethod.GET, "/formulario", "/registro").hasRole("Admin")
-                        .requestMatchers(HttpMethod.POST, "/guardarUsuario").hasRole("Admin")
+                        .requestMatchers(HttpMethod.GET, "/formulario", "/registro").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/guardarUsuario").permitAll()
 
                         // Rutas para editar o borrar: solo Admin
                         .requestMatchers("/editar/**", "/borrar/**").hasRole("Admin")
